@@ -12,28 +12,31 @@ public class StringCalculatorTest {
 		assertEquals(0, calculate("0"));
 		assertEquals(0, calculate("0,0"));
 		assertEquals(1, calculate("1"));
+		assertEquals(5, calculate("5"));
 		assertEquals(2, calculate("1,1"));
 		assertEquals(4, calculate("4"));
-		assertEquals(8, calculate("4,4"));
+		assertEquals(6, calculate("4,2"));
+		assertEquals(12, calculate("4,4,4"));
 	}
 
 	private int calculate(String input) {
 		int result = 0;
-		if (isEmptyOrZero(input)) {
-			result = 0;
-		} else {
-			String[] numbers = input.split(",");
-			if (numbers.length == 1) {
-				result = Integer.parseInt(numbers[0]);
-			} else {
-				result = Integer.parseInt(numbers[0])
-						+ Integer.parseInt(numbers[1]);
-			}
-		}
-		return result;
+
+		if (isEmpty(input))
+			return result;
+
+		return calculateSum(input.split(","));
 	}
 
-	private boolean isEmptyOrZero(String input) {
-		return input.equals("") || input.equals("0") || input.equals("0,0");
+	private int calculateSum(String[] numbers) {
+		int sum = 0;
+		for (String number : numbers) {
+			sum += Integer.parseInt(number);
+		}
+		return sum;
+	}
+
+	private boolean isEmpty(String input) {
+		return input.equals("");
 	}
 }
